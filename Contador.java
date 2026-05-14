@@ -1,42 +1,33 @@
 package ec.edu.utpl.computacion.proava;
 
-public class Contador {
+// Implementamos Runnable para seguir las buenas prácticas de Java
+public class Contador implements Runnable {
 
-    private String palabra1;
-    private String palabra2;
-    private String palabra3;
-    private int fila;
+    private final String[] filaDatos; // Recibe la fila completa
+    private final int numFila;
     private int cont;
-    private String buscPalabra;
-   public Contador (String palabra1, String palabra2,String palabra3,int fila,int cont,String buscPalabra){
-       this.palabra1=palabra1;
-       this.palabra2=palabra2;
-       this.palabra3=palabra3;
-       this.fila=fila;
-       this.cont=0;
-       this.buscPalabra=buscPalabra;
+    private final String buscPalabra;
 
+    public Contador(String[] filaDatos, int numFila, String buscPalabra) {
+        this.filaDatos = filaDatos;
+        this.numFila = numFila;
+        this.buscPalabra = buscPalabra;
+        this.cont = 0; // Inicializa en 0
+    }
 
-   }
-    public void Run(){
-       if (palabra1.equals(buscPalabra)){
+    @Override
+    public void run() {
+        // Recorremos la fila dinámicamente con un bucle
+        for (String palabra : filaDatos) {
+            if (palabra != null && palabra.equals(buscPalabra)) {
                 cont++;
             }
-        if (palabra2.equals(buscPalabra)){
-            cont++;
+        }
+        System.out.println("En la fila " + numFila + " existen " + cont + " de '" + buscPalabra + "'");
+    }
 
-        }
-        if (palabra3.equals(buscPalabra)){
-            cont++;
-
-        }
-//        try {
-//            Thread.sleep(1000); // pausa 1 segundo real
-//        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt();
-//            return;
-//        }
-        System.out.println("En la fila "+fila+" Existen " +cont+" de "+buscPalabra);
-        cont=0;
-        }
+    // Método Getter para que Main pueda consultar el total acumulado por este hilo
+    public int getCont() {
+        return cont;
+    }
 }
