@@ -105,3 +105,5 @@ public class Contador {
         }
 }
 
+
+La conversacion con la Ia y unico promt: https://gemini.google.com/share/b5ec00672180
