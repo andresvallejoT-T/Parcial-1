@@ -1,56 +1,62 @@
 package ec.edu.utpl.computacion.proava;
 
-
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
+        String palabraObjetivo = "java";
+        String[][] matriz = new String[3][3];
 
-//compare to
-        String matriz [][] =  new String[3][3] ;
-
-        for (int i=0;i < matriz.length;i++)
-
-        {
-        for (int j =0 ; j< matriz.length ;j++)
-        {
-            matriz[i][j] = palabra();
-            System.out.print((matriz[i][j]+" "));
-
-        }
+        System.out.println("=== Matriz Generada ===");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                matriz[i][j] = generarPalabra();
+                System.out.print("[" + matriz[i][j] + "] ");
+            }
             System.out.println();
         }
-        Contador fila1 = new Contador(matriz[0][0],matriz[0][1],matriz[0][2],1,0,"java");
-        Contador fila2 = new Contador(matriz[1][0],matriz[1][1],matriz[1][2],2,0,"java");
-        Contador fila3 = new Contador(matriz[2][0],matriz[2][1],matriz[2][2],3,0,"java");
+        System.out.println("=======================\n");
 
-        Thread hiloA =new Thread(()-> fila1.Run());
-        Thread hiloB = new Thread(()-> fila2.Run());
-        Thread hiloC = new Thread(()-> fila3.Run());
-      hiloA.start();
-      hiloB.start();
-      hiloC.start();
-      try{
-          hiloA.join();
-          hiloB.join();
-          hiloC.join();
+        // REQUISITO 1: Mostrar al inicio la palabra que se está buscando
+        System.out.println(">>> Iniciando búsqueda de la palabra: '" + palabraObjetivo + "' <<<\n");
 
+        // Instanciamos los contadores pasándole la fila completa de la matriz
+        Contador cFila1 = new Contador(matriz[0], 1, palabraObjetivo);
+        Contador cFila2 = new Contador(matriz[1], 2, palabraObjetivo);
+        Contador cFila3 = new Contador(matriz[2], 3, palabraObjetivo);
 
-      } catch (InterruptedException e){
-             Thread.currentThread().interrupt();
-      }
+        // Pasamos el Runnable directamente al Thread
+        Thread hiloA = new Thread(cFila1);
+        Thread hiloB = new Thread(cFila2);
+        Thread hiloC = new Thread(cFila3);
 
+        hiloA.start();
+        hiloB.start();
+        hiloC.start();
+
+        try {
+            // Esperamos de forma segura que todos terminen
+            hiloA.join();
+            hiloB.join();
+            hiloC.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("El hilo principal fue interrumpido.");
+            return;
+        }
+
+        // REQUISITO 2: Sumar los resultados parciales y mostrar el gran total al final
+        int totalRepeticiones = cFila1.getCont() + cFila2.getCont() + cFila3.getCont();
+
+        System.out.println("\n=======================================================");
+        System.out.println("TOTAL: La palabra '" + palabraObjetivo + "' se repite " + totalRepeticiones + " veces en total.");
+        System.out.println("=======================================================");
     }
 
-    public static String palabra (  ){
-        int b = (int)(Math.random() *3);
-        String pal = "null" ;
-        if (b==0){
-            pal= "java";
-        }else if (b==1){
-            pal= "python";
-        }else {
-            pal= "c++";
-        }
-        return pal;
-
+    public static String generarPalabra() {
+        int b = (int) (Math.random() * 3);
+        return switch (b) {
+            case 0 -> "java";
+            case 1 -> "python";
+            default -> "c++";
+        };
     }
 }
