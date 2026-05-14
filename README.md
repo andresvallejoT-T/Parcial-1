@@ -1,6 +1,9 @@
 Ia a Utilizar Gemini Pro
 Gemini de paga
 
+Mejoras Evidente gran mejora esterica cuando se crea la matriz, agrego que palabra se busca y muestra las hilos ejecutador con ayuda del join mostrando los hilos y sus java(Palabra buscada) y el total de java
+He implemento la funcion switch para no usar if else y mejorar el codigo 
+
 Prom numero Usado:
 Mi codigo genera una matriz 3x3 que tiene en sus datos el nombre de 3 lenguajes de programacion, lo que realiza mi codigo dividio en dos clases jave la Clase Main y la Clase Contador, usan hilos para leer el nombre del lenjuague de programacion usando el el join en los hilos para q se muestre la fila y la cantidad de que palabra se esta buscando en mi codigo hice q busque la palabra java. quiero que me digas como puedo mejorar el codigo y que opinas de este, ademas si es posible me gustaria agregar que se muestre al inicio la palabra q se esta buscando y al final la palabra el total de veces q se repite
 
